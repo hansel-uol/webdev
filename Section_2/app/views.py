@@ -2,7 +2,7 @@ from flask import render_template, flash
 from app import app
 from .forms import CalculatorForm
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     user = {'name': 'Sam Wilson'}
     return render_template('index.html',
