@@ -1,132 +1,107 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-        <link rel="stylesheet" href="../static/style.css" />
-        {% if title %}
-        <title>{{ title }}</title>
-        {% else %}
-        <title>No title specified</title>
-        {% endif %}
-    </head>
-    <body>
-        
-        <div class="container">
-            <div id="add">
-                <div class="row m-3">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-success btn-block p-2">Add Income</button>
-                    </div>
-                </div>
-        
-                <div class="row m-3">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-danger btn-block p-2">Add Expenditure</button>
-                    </div>
-                </div>
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div id="add">
+        <div class="row m-3">
+            <div class="col-12">
+                <a href="/income" class="btn btn-success btn-block p-2" role="button" aria-pressed="true">Add Income</a>
             </div>
-
-            <br>
-            
-                    <!-- Conditional Render -->
-                <!-- <div class="col-sm text-center">
-                    <div class="card text-white bg-danger mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Expenditure:</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        </div>
-                    </div>
-                </div> -->
-
-              <table class="table table-bordered table-dark">
-                <thead>
-                  <tr>
-                    <th scope="col">Type</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Action</th>
-                    <th scope="col">Amount (£)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row" class="income">Income</th>
-                    <td>Vestibulum eu odio eget neque tempus dictum sit amet dictum augue.</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                    <td class="text-center">50</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" class="expenditure">Expenditure</th>
-                    <td>Jacob</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                    <td class="text-center">50</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" class="income">Income</th>
-                    <td>Larry the Bird Vestibulum eu odio eget neque tempus dictum sit amet dictum augue.</td>
-                    <td>
-                        <button type="button" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                    </td>
-                    <td class="text-center">50</td>
-                  </tr>
-
-                </tbody>
-              </table>
-
-            <br>
-
-            <div class="row">
-            <div class="col-sm text-center">
-                <div class="card text-white bg-success mb-3" >
-                    <div class="card-body">
-                        <h5 class="card-title">Total Income (£):</h5>
-                        <p class="card-text">400</p>
-                    </div>
-                </div>
-            </div>
-                
-            <div class="col-sm text-center">
-                    <div class="card text-white bg-danger mb-3">
-                         <div class="card-body">
-                            <h5 class="card-title">Total Expenditure (£):</h5>
-                            <p class="card-text">200</p>
-                        </div>
-                    </div>
-                </div>
-             </div>
-
-            <div class="row">
-                <div class="col text-center">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Surplus/Deficit (£):</h5>
-                            <p class="card-text">200</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
+        <div class="row m-3">
+            <div class="col-12">
+                <a href="/expenditure" class="btn btn-danger btn-block p-2" role="button" aria-pressed="true">Add Expenditure</a>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    
+            <!-- Conditional Render -->
+        <!-- <div class="col-sm text-center">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Expenditure:</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+        </div> -->
+
+        <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Name</th>
+            <th scope="col">Action</th>
+            <th scope="col">Amount (£)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <th scope="row" class="income">Income</th>
+            <td>Vestibulum eu odio eget neque tempus dictum sit amet dictum augue.</td>
+            <td>
+                <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </td>
+            <td class="text-center">50</td>
+            </tr>
+
+            <tr>
+            <th scope="row" class="expenditure">Expenditure</th>
+            <td>Jacob</td>
+            <td>
+                <button type="button" class="btn btn-warning">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </td>
+            <td class="text-center">50</td>
+            </tr>
+
+            <tr>
+            <th scope="row" class="income">Income</th>
+            <td>Larry the Bird Vestibulum eu odio eget neque tempus dictum sit amet dictum augue.</td>
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Edit</button>
+                <a href="/delete" class="btn btn-danger" role="button" aria-pressed="true">Delete</a>
+            </td>
+            <td class="text-center">50</td>
+            </tr>
+
+        </tbody>
+        </table>
+
+    <br>
+
+    <div class="row">
+    <div class="col-sm text-center">
+        <div class="card text-white bg-success mb-3" >
+            <div class="card-body">
+                <h5 class="card-title">Total Income (£):</h5>
+                <p class="card-text">400</p>
+            </div>
+        </div>
+    </div>
         
+    <div class="col-sm text-center">
+            <div class="card text-white bg-danger mb-3">
+                    <div class="card-body">
+                    <h5 class="card-title">Total Expenditure (£):</h5>
+                    <p class="card-text">200</p>
+                </div>
+            </div>
+        </div>
+        </div>
 
-        <div>{% block content %}{% endblock %}</div>
+    <div class="row">
+        <div class="col text-center">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Surplus/Deficit (£):</h5>
+                    <p class="card-text">200</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="x" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="x" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="x" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    </body>
-</html>
+</div>
+{% endblock %}

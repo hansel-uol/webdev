@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+    <ul>
+     {% for message in messages %}
+       <li>{{ message }} </li>
+     {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<div class="container text-center p-3">
+    <h1>{{ title }}</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="inputAmount">Name:</label>
+            {{ form.name(class_='form-control') }}
+        </div>
+
+        <div class="form-group">
+            <label for="inputAmount">Amount (£):</label>
+            {{ form.amount(class_='form-control') }}
+        </div>
+
+        <p><input type="submit" value="Submit"></p>
+    </form>
+</div>
+{% endblock %}

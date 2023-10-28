@@ -1,6 +1,6 @@
-from flask import render_template, flash
-from app import app
-from .forms import CalculatorForm
+from flask import render_template, flash, request, session, redirect, url_for #Added request session redirect, url_for
+from app import app, db, models # Added db and models subsequently.
+from .forms import CalculatorForm, AddIncomeExpenditureForm
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -22,3 +22,39 @@ def calculator():
     return render_template('calculator.html',
                            title='Calculator',
                            form=form)
+
+
+@app.route('/income', methods=['GET', 'POST'])
+def addIncome():
+    form = AddIncomeExpenditureForm()
+    if form.validate_on_submit():
+        flash('Yay, added income')
+    return render_template('create.html',
+                            title='Income',
+                            form=form)
+
+@app.route('/expenditure', methods=['GET', 'POST'])
+def addExpenditure():
+    form = AddIncomeExpenditureForm()
+    if form.validate_on_submit():
+        if request.method == 'POST':
+            name = request.form['name']
+            amount = request.form['amount']
+
+            income = models.Income.query.filter_by(name='test23').first()
+            flash(income)
+            flash(f'{name}, {amount}')
+
+            if income:
+                flash('Already there')
+            else:
+                flash('New data')
+                test = models.Income(name='test12344', amount='23')
+                db.session.add(test)
+                db.session.commit()
+
+        flash('Yay, added expenditure')
+
+    return render_template('create.html',
+                            title='Expenditure',
+                            form=form)
