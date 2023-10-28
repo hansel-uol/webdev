@@ -1,4 +1,5 @@
 from app import db
+from datetime import datetime
 
 class Property(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -11,8 +12,10 @@ class Income(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(500), index=True, unique=True)
     amount = db.Column(db.Float)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Expenditure(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(500), index=True, unique=True)
     amount = db.Column(db.Float)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)

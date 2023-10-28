@@ -35,26 +35,33 @@ def addIncome():
 
 @app.route('/expenditure', methods=['GET', 'POST'])
 def addExpenditure():
+    expenditure = None
     form = AddIncomeExpenditureForm()
     if form.validate_on_submit():
         if request.method == 'POST':
             name = request.form['name']
             amount = request.form['amount']
 
-            income = models.Income.query.filter_by(name='test23').first()
-            flash(income)
-            flash(f'{name}, {amount}')
+            expenditure = models.Expenditure.query.filter_by(name=name).first()
+            
+            try:
+                if expenditure:
+                    flash('Expenditure with that name already exists!', 'danger')
+                else:
+                    flash('Successfully added expenditure!', 'success')
+                    expenditure = models.Expenditure(name=name, amount=amount)
+                    db.session.add(expenditure)
+                    db.session.commit()
+                
+                return redirect(url_for('addExpenditure'))
 
-            if income:
-                flash('Already there')
-            else:
-                flash('New data')
-                test = models.Income(name='test12344', amount='23')
-                db.session.add(test)
-                db.session.commit()
-
-        flash('Yay, added expenditure')
+            except:
+                return "There was an error adding the expenditure!"
+        
+    else:
+        expenditure = models.Expenditure.query.order_by(models.Expenditure.date_created)
 
     return render_template('create.html',
                             title='Expenditure',
-                            form=form)
+                            form=form,
+                            expenditure=expenditure)
