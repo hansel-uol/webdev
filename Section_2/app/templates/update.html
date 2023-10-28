@@ -17,20 +17,6 @@
 
         <p><input type="submit" value="Submit"></p>
 
-        <br>
-
-        {% if expenditure %}
-            {% for expenditure in expenditure %}
-                <p>{{ expenditure.name }} {{ expenditure.amount }} </p>
-                <a href="/expenditure/delete/{{ expenditure.id }}">Delete</a>
-            {% endfor %}
-        {% endif %}
-
-        {% if income %}
-            {% for income in income %}
-                <p>{{ income.name }} {{ income.amount }} </p>
-            {% endfor %}
-        {% endif %}
     </form>
 </div>
 {% endblock %}
