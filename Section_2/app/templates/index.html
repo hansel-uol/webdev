@@ -16,7 +16,6 @@
     </div>
 
     <br>
-    
             <!-- Conditional Render -->
         <!-- <div class="col-sm text-center">
             <div class="card text-white bg-danger mb-3">
@@ -68,35 +67,62 @@
     <br>
 
     <div class="row">
-    <div class="col-sm text-center">
-        <div class="card text-white bg-success mb-3" >
-            <div class="card-body">
-                <h5 class="card-title">Total Income (£):</h5>
-                <p class="card-text">400</p>
+        <div class="col-sm text-center">
+            <div class="card text-white bg-success mb-3" >
+                <div class="card-body">
+                    <h5 class="card-title">Total Income (£):</h5>
+                    <p class="card-text">
+                        {{ total_income }}
+                    </p>
+                </div>
+            </div>
+        </div>
+            
+        <div class="col-sm text-center">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Expenditure (£):</h5>
+                    <p class="card-text">
+                        {{ total_expenditure }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Renders either a surplus/deficit depending on the net difference of income and expenditure -->
+    <div class="row">
+        <div class="col text-center">
+            <div class="card text-white 
+            {% if total_difference < 0 %}
+             bg-danger 
+            {% elif total_difference > 0 %}
+            bg-success
+            {% else %}
+            bg-info
+            {% endif %} mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% if total_difference < 0 %}
+                            Deficit
+                        {% else %}
+                            Surplus
+                        {% endif %}
+                        (£):
+                    </h5>
+                    <p class="card-text">
+                        {% if total_difference < 0 %}
+                            {{ total_difference * -1 }}
+                        {% else %}
+                            {{ total_difference }}
+                        {% endif %}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
         
-    <div class="col-sm text-center">
-            <div class="card text-white bg-danger mb-3">
-                    <div class="card-body">
-                    <h5 class="card-title">Total Expenditure (£):</h5>
-                    <p class="card-text">200</p>
-                </div>
-            </div>
-        </div>
-        </div>
-
-    <div class="row">
-        <div class="col text-center">
-            <div class="card text-white bg-info mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Surplus/Deficit (£):</h5>
-                    <p class="card-text">200</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        
 
 </div>
 {% endblock %}

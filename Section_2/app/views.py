@@ -9,6 +9,11 @@ def index():
     income_entries = models.Income.query.all()
     expenditure_entries = models.Expenditure.query.all()
     
+    # Calculate values and pass them to the template.
+    total_income = sum(entry.amount for entry in income_entries)
+    total_expenditure = sum(entry.amount for entry in expenditure_entries)
+    total_difference = total_income - total_expenditure
+
     # Combine the results from both tables.
     income_and_expenditure = income_entries + expenditure_entries
 
@@ -17,7 +22,10 @@ def index():
 
     return render_template('index.html',
                            title='Home Page',
-                           income_and_expenditure=income_and_expenditure)
+                           income_and_expenditure=income_and_expenditure,
+                           total_income=total_income,
+                           total_expenditure=total_expenditure,
+                           total_difference=total_difference)
 
 
 @app.route('/calculator', methods=['GET', 'POST'])
