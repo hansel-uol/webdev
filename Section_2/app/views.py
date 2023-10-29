@@ -1,18 +1,24 @@
 from flask import render_template, flash, request, session, redirect, url_for #Added request session redirect, url_for
 from app import app, db, models # Added db and models subsequently.
 from .forms import CalculatorForm, AddIncomeExpenditureForm
+from sqlalchemy import or_ # Added to combine results on home page
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    user = {'name': 'Sam Wilson'}
-    return render_template('index.html',
-                           title='Simple template example',
-                           user=user)
+    # Query each table.
+    income_entries = models.Income.query.all()
+    expenditure_entries = models.Expenditure.query.all()
+    
+    # Combine the results from both tables.
+    income_and_expenditure = income_entries + expenditure_entries
 
-@app.route('/fruit')
-def displayFruit():
-    fruits = ["Apple", "Banana", "Orange", "Kiwi"]
-    return render_template("fruit_with_inheritance.html",fruits=fruits)
+    # Sort the combined results by creation time of user using a lambda function.
+    income_and_expenditure.sort(key=lambda x: x.date_created, reverse=False)
+
+    return render_template('index.html',
+                           title='Home Page',
+                           income_and_expenditure=income_and_expenditure)
+
 
 @app.route('/calculator', methods=['GET', 'POST'])
 def calculator():
@@ -98,8 +104,6 @@ def update_entry(entry_type, id):
         entry = models.Income.query.get_or_404(id)
     elif entry_type == 'expenditure':
         entry = models.Expenditure.query.get_or_404(id)
-    else:
-        abort(404)  # handle other cases as needed
 
     if form.validate_on_submit():
         name = request.form['name']
@@ -110,8 +114,7 @@ def update_entry(entry_type, id):
             entry.amount = amount
             db.session.commit()
             flash('Successfully updated entry!', 'success')
-            # return redirect(url_for('add' + entry_type.capitalize()))
-            return redirect(request.url)
+            return redirect(url_for('index'))
         except:
             return "There was an error updating the entry!"
 
@@ -130,13 +133,19 @@ def delete_entry(entry_type, id):
         entry = models.Income.query.get_or_404(id)
     elif entry_type == 'expenditure':
         entry = models.Expenditure.query.get_or_404(id)
-    else:
-        abort(404)  # handle other cases as needed
 
     try:
         db.session.delete(entry)
         db.session.commit()
         flash('Successfully deleted entry!', 'success')
-        return redirect(url_for('add' + entry_type.capitalize()))
+
+        # Depending on the URL that called the delete.
+        # [Either home or /addIncome or /addExpenditure] redirect the URL accordingly.
+        referrer = request.referrer
+        if referrer:
+            return redirect(referrer)
+        else:
+            return redirect(url_for('add' + entry_type.capitalize()))
+
     except:
         return "There was an error deleting the entry!"

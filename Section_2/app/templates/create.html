@@ -22,6 +22,7 @@
         {% if expenditure %}
             {% for expenditure in expenditure %}
                 <p>{{ expenditure.name }} {{ expenditure.amount }} </p>
+                <a href="/expenditure/update/{{ expenditure.id }}">Update</a>
                 <a href="/expenditure/delete/{{ expenditure.id }}">Delete</a>
             {% endfor %}
         {% endif %}
