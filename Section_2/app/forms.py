@@ -11,4 +11,6 @@ class AddIncomeExpenditureForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     amount = DecimalField('Amount', validators=[DataRequired()])
 
-    # submit = SubmitField('Submit')
+class AddSavingsGoalForm(FlaskForm):
+    name = StringField('Name')
+    amount = DecimalField('Amount', validators=[DataRequired()])

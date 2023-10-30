@@ -1,10 +1,6 @@
-.total {
-    background-color: orange;
-    display: flex;
-    justify-content: center;
-    margin-top: 120px;
-    gap: 75px;
-    /* align-items: center; */
+body {
+    background-color: rgb(225, 225, 225);
+    
 }
 
 .container {
@@ -12,10 +8,108 @@
     margin: auto;
 }
 
-.expenditure {
-    background-color: rgb(200, 70, 70);
+/* Table Styling */
+.income {
+    background-color: #168361;
+    color: white;
+    font-family: Gill Sans, Verdana;
+    font-size: 24px;
+    letter-spacing: 1px;
+    font-weight: 350;
+    text-align: center;
 }
 
-.income {
-    background-color: rgb(70, 170, 70);
+.expenditure {
+    background-color: #DC3545;
+    color: white;
+    font-family: Gill Sans, Verdana;
+    font-size: 24px;
+    letter-spacing: 1px;
+    font-weight: 350;
+    text-align: center;
+}
+
+
+.table-primary {
+    background-color: #d3d3d3d2 !important;
+}
+
+/* Button Styling */
+.btn {
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.btn-primary {
+    background-color: #489fd5 !important;
+}
+
+.btn-success {
+    background-color: #168361;
+    color: white;
+    border-color: #168361;
+}
+
+.btn-danger {
+    background-color: #DC3545;
+    color: white;
+    border-color: #DC3545;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Global styling */
+.bg-success {
+    background-color: #168361 !important;
+}
+
+.bg-info {
+    background-color: #264975 !important;
+}
+
+.bg-primary {
+    background-color: #01262e !important;
+}
+
+
+/* Navbar styling */
+.bg-navbar {
+    background-color: #289e9b !important;
+}
+
+
+.main {
+    color:black;
+    font-size: 24px;
+    padding: 40px;
+}
+
+.main > h1 {
+    font-family: Arial, sans-serif;
+    font-size: 2.5rem;
+    line-height: 2rem;
+}
+
+.main > p {
+    font-family: Arial, sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+}
+
+/* Form styling */
+.form-group {
+    margin: 10px;
+}
+
+.form-group > label {
+    font-size: 2rem;
+}
+
+.chart {
+    display: flex;
+    justify-content:center;
 }

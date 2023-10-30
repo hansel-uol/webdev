@@ -19,3 +19,9 @@ class Expenditure(db.Model):
     name = db.Column(db.String(500), index=True, unique=True)
     amount = db.Column(db.Float)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Savings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(500))
+    goal_amount = db.Column(db.Float)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)

@@ -6,17 +6,18 @@
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            <label for="inputAmount">Name:</label>
-            {{ form.name(class_='form-control') }}
+            <label for="updateName">Name:</label>
+            {{ form.name(class_='form-control', id='updateName') }}
         </div>
 
         <div class="form-group">
-            <label for="inputAmount">Amount (£):</label>
-            {{ form.amount(class_='form-control') }}
+            <label for="updateAmount">Amount (£):</label>
+            {{ form.amount(class_='form-control', id='updateAmount') }}
         </div>
 
         <p><input type="submit" value="Submit"></p>
 
+        <br>
     </form>
 </div>
 {% endblock %}

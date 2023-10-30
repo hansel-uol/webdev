@@ -1,36 +1,83 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container text-center p-3">
+<div class="container text-center p-3 m-5 ">
     <h1>{{ title }}</h1>
+    <br>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
-            <label for="inputAmount">Name:</label>
-            {{ form.name(class_='form-control') }}
+            <label for="inputName">Name:</label>
+            {{ form.name(class_='form-control', id='inputName') }}
         </div>
 
         <div class="form-group">
             <label for="inputAmount">Amount (£):</label>
-            {{ form.amount(class_='form-control') }}
+            {{ form.amount(class_='form-control', id='inputAmount') }}
         </div>
 
-        <p><input type="submit" value="Submit"></p>
+        {% if expenditure %}
+        <button type="submit" class="btn btn-info p-2 mb-5 mt-3 display-1" role="button" aria-pressed="true">Add Expenditure</button>
+        {% else %}
+            <button type="submit" class="btn btn-info p-2 mb-5 mt-3 display-1" role="button" aria-pressed="true">Add Income</button>
+        {% endif %}
 
         <br>
 
-        {% if expenditure %}
-            {% for expenditure in expenditure %}
-                <p>{{ expenditure.name }} {{ expenditure.amount }} </p>
-                <a href="/expenditure/update/{{ expenditure.id }}">Update</a>
-                <a href="/expenditure/delete/{{ expenditure.id }}">Delete</a>
-            {% endfor %}
+        {% if expenditure  %}
+            <table class="table table-bordered table-secondary">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Amount (£)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for expenditure in expenditure %}
+                    <tr>
+                        <th scope="row" class="expenditure">Expenditure</th>
+                        <td>{{ expenditure.name }}</td>
+                        <td>
+                            <a href="{{ url_for('update_entry', entry_type='expenditure', id=expenditure.id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ url_for('delete_entry', entry_type='expenditure', id=expenditure.id) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                        <td class="text-center">{{ expenditure.amount }}</td>
+                    </tr>
+                            
+                {% endfor %}
+
+                </tbody>
+            </table>
         {% endif %}
 
         {% if income %}
-            {% for income in income %}
-                <p>{{ income.name }} {{ income.amount }} </p>
-            {% endfor %}
+            <table class="table table-bordered table-secondary">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Action</th>
+                        <th scope="col">Amount (£)</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for income in income %}
+                    <tr>
+                        <th scope="row" class="income">Income</th>
+                        <td>{{ income.name }}</td>
+                        <td>
+                            <a href="{{ url_for('update_entry', entry_type='income', id=income.id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ url_for('delete_entry', entry_type='income', id=income.id) }}" class="btn btn-danger">Delete</a>
+                        </td>
+                        <td class="text-center">{{ income.amount }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
         {% endif %}
     </form>
 </div>
