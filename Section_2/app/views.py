@@ -35,8 +35,8 @@ def index():
 
 @app.route('/income', methods=['GET', 'POST'])
 def addIncome():
-    income = None
     form = AddIncomeExpenditureForm()
+    
     if form.validate_on_submit():
         if request.method == 'POST':
             name = request.form['name']
@@ -53,22 +53,21 @@ def addIncome():
                     db.session.commit()
                     flash('Successfully added income!', 'success')
                 
-                return redirect(url_for('index'))
+                return redirect(url_for('addIncome'))
 
             except:
                 return "There was an error adding the income!"
         
-    else:
-        income = models.Income.query.order_by(models.Income.date_created)
+    income = models.Income.query.order_by(models.Income.date_created).all()
 
     return render_template('create.html',
                             title='Add Income',
                             form=form,
                             income=income)
 
+
 @app.route('/expenditure', methods=['GET', 'POST'])
 def addExpenditure():
-    expenditure = None
     form = AddIncomeExpenditureForm()
     
     if form.validate_on_submit():
@@ -80,7 +79,7 @@ def addExpenditure():
             
             try:
                 if expenditure:
-                    flash('Expenditure with that name already exists!', 'danger')
+                    flash('Expenditure with that name already exists!', 'info')
                 else:
                     flash('Successfully added expenditure!', 'success')
                     expenditure = models.Expenditure(name=name, amount=amount)
@@ -92,13 +91,13 @@ def addExpenditure():
             except:
                 return "There was an error adding the expenditure!"
         
-    else:
-        expenditure = models.Expenditure.query.order_by(models.Expenditure.date_created)
+    expenditure = models.Expenditure.query.order_by(models.Expenditure.date_created).all()
 
     return render_template('create.html',
                             title='Add Expenditure',
                             form=form,
                             expenditure=expenditure)
+
 
 @app.route('/savings', methods=['GET', 'POST'])
 def add_goal():

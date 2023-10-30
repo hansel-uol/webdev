@@ -38,30 +38,27 @@
                 </thead>
                 <tbody>
                     {% for result in income_and_expenditure %}
-                        {% if result.__tablename__ == 'income' %}
-                            <tr>
-                                <th scope="row" class="income">Income</th>
-                                <td>{{ result.name }}</td>
-                                <td>
-                                    <a href="{{ url_for('update_entry', entry_type='income', id=result.id) }}" class="btn btn-warning">Edit</a>
-                                    <a href="{{ url_for('delete_entry', entry_type='income', id=result.id) }}" class="btn btn-danger">Delete</a>
-                                </td>
-                                <td class="text-center">{{ result.amount }}</td>
-                            </tr>
-                        {% elif result.__tablename__ == 'expenditure' %}
-                            <tr>
-                                <th scope="row" class="expenditure">Expenditure</th>
-                                <td>{{ result.name }}</td>
-                                <td>
-                                    <a href="{{ url_for('update_entry', entry_type='expenditure', id=result.id) }}" class="btn btn-warning">Edit</a>
-                                    <a href="{{ url_for('delete_entry', entry_type='expenditure', id=result.id) }}" class="btn btn-danger">Delete</a>
-                                </td>
-                                <td class="text-center">{{ result.amount }}</td>
-                            </tr>
-                        {% endif %}
+                        {% set is_income = result.__tablename__ == 'income' %}
+                        {% set row_class = 'income' if is_income else 'expenditure' %}
+                
+                        <tr class="text-center">
+                            <th scope="row" class="{{ row_class }}">{{ 'Income' if is_income else 'Expenditure' }}</th>
+                            <td>{{ result.name }}</td>
+                            <td>
+                                <a href="{{ url_for('update_entry', entry_type=result.__tablename__, id=result.id) }}" class="btn btn-warning">Edit</a>
+                                <a href="{{ url_for('delete_entry', entry_type=result.__tablename__, id=result.id) }}" class="btn btn-danger">Delete</a>
+                            </td>
+                            <td>{{ result.amount }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
+                
             </table>
+
+        {% else %}
+            <div class="empty">
+                <h1>Please add some transactions in your income/expenditure so we can manage your finances!</h1>
+            </div>
         {% endif %}
 
     <br>
@@ -94,7 +91,7 @@
             <div class="col-sm text-center">
                 <div class="card text-white bg-info mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Savings Goal:</h5>
+                        <h5 class="card-title">Savings Goal (£):</h5>
                         <p class="card-text">{{ savingsGoal[0].goal_amount }}</p>
                     </div>
                 </div>
