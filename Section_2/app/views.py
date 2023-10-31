@@ -223,7 +223,7 @@ def update_entry(entry_type, id):
         name = request.form['name']
         amount = request.form['amount']
         
-        if existing_entry:
+        if existing_entry and existing_entry.id != entry.id:
             flash('An entry with the same name already exists.', 'warning')
             return redirect(url_for('update_entry', entry_type=entry_type, id=id))
 
