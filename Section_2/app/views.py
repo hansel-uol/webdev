@@ -207,6 +207,7 @@ def delete_goal():
     except:
         flash('There was an error deleting the entry!', 'danger')
 
+# Single route to manage both income/expenditure
 @app.route('/<entry_type>/update/<int:id>', methods=['GET', 'POST'])
 def update_entry(entry_type, id):
     form = AddIncomeExpenditureForm()
@@ -222,9 +223,15 @@ def update_entry(entry_type, id):
         name = request.form['name']
         amount = request.form['amount']
         
+        # If there exists an entry with the same name as in the form.
         if existing_entry:
-            flash('An entry with the same name already exists.', 'warning')
-            return redirect(url_for('update_entry', entry_type=entry_type, id=id))
+            # Delete the existing entry and replace with the new entry.
+
+            db.session.delete(existing_entry)
+            db.session.commit()
+
+            # flash('An entry with the same name already exists.', 'warning')
+            # return redirect(url_for('update_entry', entry_type=entry_type, id=id))
 
         try:
             entry.name = name
@@ -242,6 +249,7 @@ def update_entry(entry_type, id):
                             title='Update ' + entry_type.capitalize(),
                             form=form)
 
+# Single route to manage deletion of income/expenditure
 @app.route('/<entry_type>/delete/<int:id>')
 def delete_entry(entry_type, id):
     if entry_type == 'income':
