@@ -5,4 +5,6 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = True    
 
 WTF_CSRF_ENABLED = True
-SECRET_KEY = 'a-very-secret-secret'
+SECRET_KEY = 'q7r9pZK4YqBqZcTn'
+
+# Secret key generated using, 'openssl rand -base64 12'

@@ -1,6 +1,7 @@
+/* Global styling */
+
 body {
     background-color: rgb(225, 225, 225);
-    
 }
 
 .container {
@@ -8,28 +9,42 @@ body {
     margin: auto;
 }
 
+.bg-success {
+    background-color: #168361 !important;
+}
+
+.bg-info {
+    background-color: #264975 !important;
+}
+
+.bg-primary {
+    background-color: #01262e !important;
+}
+
+
 /* Table Styling */
+
 .income {
     background-color: #168361;
     color: white;
-    font-family: Gill Sans, Verdana;
     font-size: 24px;
     letter-spacing: 1px;
-    font-weight: 350;
     text-align: center;
+    font-family: Gill Sans, Verdana;
+    font-weight: 350;
 }
 
 .expenditure {
     background-color: #DC3545;
     color: white;
-    font-family: Gill Sans, Verdana;
     font-size: 24px;
     letter-spacing: 1px;
-    font-weight: 350;
     text-align: center;
+    font-family: Gill Sans, Verdana;
+    font-weight: 350;
 }
 
-
+/* Overide bootstrap default. */
 .table-primary {
     background-color: #d3d3d3d2 !important;
 }
@@ -62,25 +77,13 @@ body {
     opacity: 0.9;
 }
 
-/* Global styling */
-.bg-success {
-    background-color: #168361 !important;
-}
-
-.bg-info {
-    background-color: #264975 !important;
-}
-
-.bg-primary {
-    background-color: #01262e !important;
-}
-
-
 /* Navbar styling */
+
 .bg-navbar {
     background-color: #289e9b !important;
 }
 
+/* Specific section styling */
 
 .main {
     color:black;
@@ -114,6 +117,7 @@ body {
     justify-content:center;
 }
 
+/* Conditional elements styling */
 
 .empty {
     text-align: center;

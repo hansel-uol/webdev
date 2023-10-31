@@ -1,9 +1,8 @@
 from flask import render_template, flash, request, session, redirect, url_for #Added request session redirect, url_for
 from app import app, db, models # Added db and models subsequently.
-from .forms import CalculatorForm, AddIncomeExpenditureForm, AddSavingsGoalForm
+from .forms import AddIncomeExpenditureForm, AddSavingsGoalForm
 from sqlalchemy import or_ # Added to combine results on home page
-
-import json
+import json # Added json for chart.js
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -33,6 +32,7 @@ def index():
                            total_difference=total_difference,
                            savingsGoal=savingsGoal)
 
+
 @app.route('/income', methods=['GET', 'POST'])
 def addIncome():
     form = AddIncomeExpenditureForm()
@@ -54,10 +54,10 @@ def addIncome():
                     flash('Successfully added income!', 'success')
                 
                 return redirect(url_for('addIncome'))
-
             except:
                 return "There was an error adding the income!"
         
+    # Sort by date and time before rendering.
     income = models.Income.query.order_by(models.Income.date_created).all()
 
     return render_template('create.html',
@@ -90,7 +90,7 @@ def addExpenditure():
 
             except:
                 return "There was an error adding the expenditure!"
-        
+
     expenditure = models.Expenditure.query.order_by(models.Expenditure.date_created).all()
 
     return render_template('create.html',
@@ -102,6 +102,8 @@ def addExpenditure():
 @app.route('/savings', methods=['GET', 'POST'])
 def add_goal():
     form = AddSavingsGoalForm()
+
+    # Defining variables for chart.js line graph.
     final_data_json = None
     final_amount = None
 
@@ -121,33 +123,43 @@ def add_goal():
 
         return redirect(url_for('add_goal'))
 
+    # Only render chart.js graph if savings goal exists.
     if existing_savings_goal:
         income_entries = models.Income.query.all()
         expenditure_entries = models.Expenditure.query.all()
 
+        # Have a way of distinguishing whether entry is either income or expenditure for 
+        # being able to either add or subtract from previous array value.
         income_entries_with_type = [(entry, "Income") for entry in income_entries]
         expenditure_entries_with_type = [(entry, "Expenditure") for entry in expenditure_entries]
 
+        # Add entries into one single array.
         new_income_and_expenditure = income_entries_with_type + expenditure_entries_with_type
 
+        # Sort by time made.
         new_income_and_expenditure.sort(key=lambda x: x[0].date_created)
 
         # Now you can iterate through income_and_expenditure and access each entry and its type
         data_x_axis = []
         current_balance = 0
 
-        # Instantiate 0
+        # Instantiate data_x_axis[0] to be 0 initially. (Since no transactions have been made just yet).
         data_x_axis.append(current_balance)
 
+        # Parse through each entry, adding/subtracting from the subsequent values to get a plot for the
+        # x-axis.
         for entry, entry_type in new_income_and_expenditure:
             if entry_type == "Income":
                 current_balance += entry.amount
-            else:  # It's an expenditure
+            else:
                 current_balance -= entry.amount
             data_x_axis.append(current_balance)
 
-
+        # Dump the data to an array to render with jinja.
         final_data_json = json.dumps(data_x_axis)
+
+        # Keep track of the final amount to do arithmetic with savings goal value.
+        # (To see whether user has met the goal or underachieved).
         final_amount = data_x_axis[-1]
 
 

@@ -1,16 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, DecimalField, TextAreaField, StringField, SubmitField
-from wtforms.validators import DataRequired
-
-class CalculatorForm(FlaskForm):
-    number1 = IntegerField('number1', validators=[DataRequired()])
-    number2 = IntegerField('number2', validators=[DataRequired()])
-    date = TextAreaField()
+from wtforms import DecimalField, StringField
+from wtforms.validators import DataRequired, Length, NumberRange
     
 class AddIncomeExpenditureForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    amount = DecimalField('Amount', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired(), Length(min=1, max=50)])
+    amount = DecimalField('Amount', validators=[DataRequired(), NumberRange(min=1)])
 
 class AddSavingsGoalForm(FlaskForm):
-    name = StringField('Name')
-    amount = DecimalField('Amount', validators=[DataRequired()])
+    name = StringField('Name', validators=[Length(min=1, max=50)])
+    amount = DecimalField('Amount', validators=[DataRequired(), NumberRange(min=1)])
