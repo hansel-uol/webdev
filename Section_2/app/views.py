@@ -223,15 +223,9 @@ def update_entry(entry_type, id):
         name = request.form['name']
         amount = request.form['amount']
         
-        # If there exists an entry with the same name as in the form.
         if existing_entry:
-            # Delete the existing entry and replace with the new entry.
-
-            db.session.delete(existing_entry)
-            db.session.commit()
-
-            # flash('An entry with the same name already exists.', 'warning')
-            # return redirect(url_for('update_entry', entry_type=entry_type, id=id))
+            flash('An entry with the same name already exists.', 'warning')
+            return redirect(url_for('update_entry', entry_type=entry_type, id=id))
 
         try:
             entry.name = name
